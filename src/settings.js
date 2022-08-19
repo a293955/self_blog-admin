@@ -9,7 +9,7 @@ module.exports = {
 	 * @type {string}
 	 * @description logo URL
 	 */
-	logo: 'http://192.168.31.108/config/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png',
+	logo: 'http://localhost/config/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png',
 
 	/**
 	 * @type {boolean} true | false
