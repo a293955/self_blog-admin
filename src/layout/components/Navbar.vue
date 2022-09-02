@@ -7,7 +7,7 @@
 		<div class="right-menu">
 			<el-dropdown class="avatar-container" trigger="click">
 				<div class="avatar-wrapper">
-					<img :src="user.avatar" class="user-avatar">
+					<img :src="user.avatar" class="user-avatar" alt="">
 				</div>
 				<el-dropdown-menu slot="dropdown" class="user-dropdown">
 					<a target="_blank" href="https://github.com/a293955">
@@ -142,7 +142,7 @@
 						cursor: pointer;
 						position: absolute;
 						right: -20px;
-						top: 0px;
+						top: 0;
 						font-size: 12px;
 					}
 				}

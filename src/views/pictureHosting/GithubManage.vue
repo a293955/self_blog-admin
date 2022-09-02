@@ -102,9 +102,9 @@
 			}
 		},
 		created() {
-			this.hintShow1 = localStorage.getItem('hintShow1') ? false : true
-			this.hintShow2 = localStorage.getItem('hintShow2') ? false : true
-			this.hintShow3 = localStorage.getItem('hintShow3') ? false : true
+			this.hintShow1 = !localStorage.getItem('hintShow1')
+			this.hintShow2 = !localStorage.getItem('hintShow2')
+			this.hintShow3 = !localStorage.getItem('hintShow3')
 			const token = localStorage.getItem('githubToken')
 			const userInfo = localStorage.getItem('githubUserInfo')
 			if (token && userInfo) {
@@ -175,7 +175,7 @@
 				// type 1 cdn link  2 Markdown
 				let imgUrl = `https://fastly.jsdelivr.net/gh/${this.userInfo.login}/${this.activeRepos}/${file.path}`
 				let copyCont = imgUrl
-				if (type == 2) {
+				if (type === 2) {
 					copyCont = `![${file.name}](${imgUrl})`
 				}
 				copy(copyCont)

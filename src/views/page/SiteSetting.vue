@@ -20,7 +20,7 @@
 					</div>
 					<el-form label-position="right" label-width="100px">
 						<el-form-item :label="item.nameZh" v-for="item in typeMap.type2" :key="item.id">
-							<div v-if="item.nameEn=='favorite'">
+							<div v-if="item.nameEn==='favorite'">
 								<el-col :span="20">
 									<el-input v-model="item.value" size="mini"></el-input>
 								</el-col>
@@ -130,14 +130,12 @@
 					arr.forEach((item, index) => {
 						if (item.id === favorite.id) {
 							arr.splice(index, 1)
-							return
 						}
 					})
 				} else {
 					arr.forEach((item, index) => {
 						if (item.key === favorite.key) {
 							arr.splice(index, 1)
-							return
 						}
 					})
 				}
@@ -149,14 +147,12 @@
 					arr.forEach((item, index) => {
 						if (item.id === badge.id) {
 							arr.splice(index, 1)
-							return
 						}
 					})
 				} else {
 					arr.forEach((item, index) => {
 						if (item.key === badge.key) {
 							arr.splice(index, 1)
-							return
 						}
 					})
 				}

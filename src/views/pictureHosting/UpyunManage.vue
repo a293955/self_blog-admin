@@ -98,8 +98,8 @@ export default {
 		}
 	},
 	created() {
-		this.hintShow1 = localStorage.getItem('upyunHintShow1') ? false : true
-		this.hintShow2 = localStorage.getItem('upyunHintShow2') ? false : true
+		this.hintShow1 = !localStorage.getItem('upyunHintShow1')
+		this.hintShow2 = !localStorage.getItem('upyunHintShow2')
 
 		const upyunConfig = localStorage.getItem('upyunConfig')
 		if (upyunConfig) {
@@ -149,9 +149,9 @@ export default {
 		copy(type, file) {
 			// type 1 cdn link  2 Markdown
 			let copyCont = ''
-			if (type == 1) {
+			if (type === 1) {
 				copyCont = file.cdn_url
-			} else if (type == 2) {
+			} else if (type === 2) {
 				copyCont = `![${file.name}](${file.cdn_url})`
 			}
 			copy(copyCont)
