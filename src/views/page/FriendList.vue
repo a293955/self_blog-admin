@@ -48,7 +48,12 @@
 		<!--友链页面信息-->
 		<el-form label-position="top">
 			<el-form-item label="友链页面信息">
-				<mavon-editor v-model="infoForm.content"/>
+				<mavon-editor
+            v-model="infoForm.content"
+            class="md"
+            ref="md"
+            @imgAdd="imgAdd"
+        />
 			</el-form-item>
 			<el-form-item style="text-align: right;">
 				<el-button type="primary" icon="el-icon-check" @click="updateContent">保存</el-button>
@@ -117,6 +122,7 @@
 		getFriendsByQuery, updatePublished, saveFriend, updateFriend,
 		deleteFriendById, getFriendInfo, updateContent, updateCommentEnabled
 	} from "@/api/friend";
+  import axios from "axios";
 
 	export default {
 		name: "FriendList",
@@ -162,6 +168,19 @@
 			this.getInfo()
 		},
 		methods: {
+      imgAdd(pos, $file) {
+        let formdata = new FormData()
+        formdata.append('pic', $file)
+        axios({
+          headers: {'Content-Type': 'multipart/form-data',},// 设置传输内容的类型和编码
+          withCredentials: true,// 指定某个请求应该发送凭据
+          url: '/apis/friend/upload',
+          method: 'POST',
+          data: formdata
+        }).then(res => {
+          this.$refs.md.$img2Url(pos, res.data.data);
+        });
+      },
 			getInfo() {
 				getFriendInfo().then(res => {
 					this.infoForm = res.data

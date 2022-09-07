@@ -15,11 +15,21 @@
 			</el-row>
 
 			<el-form-item label="文章描述" prop="description">
-				<mavon-editor v-model="form.description"/>
+				<mavon-editor
+            v-model="form.description"
+            class="md"
+            ref="md1"
+            @imgAdd="imgAddD"
+        />
 			</el-form-item>
 
 			<el-form-item label="文章正文" prop="content">
-				<mavon-editor v-model="form.content"/>
+				<mavon-editor
+            v-model="form.content"
+            class="md"
+            ref="md"
+            @imgAdd="imgAddC"
+        />
 			</el-form-item>
 
 			<el-row :gutter="20">
@@ -105,6 +115,7 @@
 <script>
 	import Breadcrumb from "@/components/Breadcrumb";
 	import {getCategoryAndTag, saveBlog, getBlogById, updateBlog} from '@/api/blog'
+  import axios from "axios";
 
 	export default {
 		name: "WriteBlog",
@@ -153,6 +164,32 @@
 			}
 		},
 		methods: {
+      imgAddD(pos, $file) {
+        let formdata = new FormData()
+        formdata.append('pic', $file)
+        axios({
+          headers: {'Content-Type': 'multipart/form-data',},// 设置传输内容的类型和编码
+          withCredentials: true,// 指定某个请求应该发送凭据
+          url: '/apis/blog/upload',
+          method: 'POST',
+          data: formdata
+        }).then(res => {
+          this.$refs.md1.$img2Url(pos, res.data.data);
+        });
+      },
+      imgAddC(pos, $file) {
+        let formdata = new FormData()
+        formdata.append('pic', $file)
+        axios({
+          headers: {'Content-Type': 'multipart/form-data',},// 设置传输内容的类型和编码
+          withCredentials: true,// 指定某个请求应该发送凭据
+          url: '/apis/blogs/upload',
+          method: 'POST',
+          data: formdata
+        }).then(res => {
+          this.$refs.md.$img2Url(pos, res.data.data);
+        });
+      },
 			getData() {
 				getCategoryAndTag().then(res => {
 					this.categoryList = res.data.categories

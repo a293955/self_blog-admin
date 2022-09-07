@@ -19,7 +19,12 @@
 			</el-row>
 
 			<el-form-item label="正文" prop="content">
-				<mavon-editor v-model="form.content"/>
+				<mavon-editor
+            v-model="form.content"
+            class="md"
+            ref="md"
+            @imgAdd="imgAdd"
+        />
 			</el-form-item>
 
 			<el-form-item style="text-align: right;">
@@ -32,6 +37,7 @@
 <script>
 	import Breadcrumb from "@/components/Breadcrumb";
 	import {getAbout, updateAbout} from "@/api/about";
+  import axios from "axios";
 
 	export default {
 		name: "About",
@@ -53,6 +59,19 @@
 			this.getData()
 		},
 		methods: {
+      imgAdd(pos, $file) {
+        let formdata = new FormData()
+        formdata.append('pic', $file)
+        axios({
+          headers: {'Content-Type': 'multipart/form-data',},// 设置传输内容的类型和编码
+          withCredentials: true,// 指定某个请求应该发送凭据
+          url: '/apis/about/upload',
+          method: 'POST',
+          data: formdata
+        }).then(res => {
+          this.$refs.md.$img2Url(pos, res.data.data);
+        });
+      },
 			getData() {
 				getAbout().then(res => {
 					this.form.title = res.data.title

@@ -2,7 +2,12 @@
 	<div>
 		<el-form :model="form" label-position="top">
 			<el-form-item label="动态内容" prop="content">
-				<mavon-editor v-model="form.content"/>
+				<mavon-editor
+            v-model="form.content"
+            class="md"
+            ref="md"
+            @imgAdd="imgAdd"
+        />
 			</el-form-item>
 
 			<el-form-item label="点赞数" prop="likes" style="width: 50%">
@@ -23,8 +28,8 @@
 
 <script>
 	import Breadcrumb from "@/components/Breadcrumb";
-	import {getMomentById, saveMoment, updateMoment} from "@/api/moment";
-
+  import {getMomentById, saveMoment, updateMoment, upload} from "@/api/moment";
+  import axios from "axios";
 	export default {
 		name: "WriteMoment",
 		components: {Breadcrumb},
@@ -44,6 +49,19 @@
 			}
 		},
 		methods: {
+      imgAdd(pos, $file) {
+        let formdata = new FormData()
+        formdata.append('pic', $file)
+        axios({
+          headers: {'Content-Type': 'multipart/form-data',},// 设置传输内容的类型和编码
+          withCredentials: true,// 指定某个请求应该发送凭据
+          url: '/apis/moment/upload',
+          method: 'POST',
+          data: formdata
+        }).then(res => {
+          this.$refs.md.$img2Url(pos, res.data.data);
+        });
+      },
 			getMoment(id) {
 				getMomentById(id).then(res => {
 					this.form = res.data
