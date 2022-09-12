@@ -65,7 +65,7 @@
         axios({
           headers: {'Content-Type': 'multipart/form-data',},// 设置传输内容的类型和编码
           withCredentials: true,// 指定某个请求应该发送凭据
-          url: '/apis/about/upload',
+          url: '/api/about/upload',
           method: 'POST',
           data: formdata
         }).then(res => {

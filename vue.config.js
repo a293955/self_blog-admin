@@ -31,11 +31,11 @@ module.exports = {
 	productionSourceMap: false,
 	devServer: {
 		proxy: {
-			"/apis": {
+			"/api": {
 				target: "http://localhost:8090/admin",
 				changeOrigin: true,
 				pathRewrite: {
-					"^/apis": ""
+					"^/api": ""
 				}
 			}
 		},
